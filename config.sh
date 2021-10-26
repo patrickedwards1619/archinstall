@@ -60,6 +60,8 @@ systemctl enable NetworkManager sddm
 
 
 # exit the chroot environment
+echo -e "\nExiting the chroot environment in 10 seconds\n"
+sleep 10
 
 Exit
 
