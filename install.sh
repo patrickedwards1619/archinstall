@@ -132,7 +132,7 @@ rm /mnt/root/{confidentials,config.sh}
 
 
 # unmount all partitions
-umount -R /mnt
+umount -a
 
 # reboot the system
 echo -e "\nInstallation Complete.\n\nSystem will reboot in 10 seconds..."
