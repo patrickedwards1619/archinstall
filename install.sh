@@ -122,6 +122,8 @@ chmod a+x /mnt/root/config.sh
 
 
 # change root into the new system and run config script
+echo -e "\nChrooting into the new environment in 10 seconds\n"
+sleep 10
 arch-chroot /mnt #might need to remove /root/config here to get config script to run
 
 
