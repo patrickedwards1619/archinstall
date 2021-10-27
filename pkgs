@@ -1,0 +1,7 @@
+# neccessary packages
+bat xorg-server xf86-video-amdgpu plasma-desktop sddm sddm-kcm findutils mlocate man-db man-pages kate breeze-gtk cpupower kde-gtk-config kscreen sudo nano
+
+
+
+# personal packages
+bitwarden bleachbit clamav clonezilla deluge-gtk digikam dolphin firefox
