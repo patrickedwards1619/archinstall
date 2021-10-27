@@ -4,11 +4,11 @@ pacman -Sy
 
 
 # install essential packages
-pacman -S bat xorg-server xf86-video-amdgpu plasma-desktop sddm sddm-kcm networkmanager virtualbox-guest-utils findutils mlocate man-db man-pages kate breeze-gtk cpupower kde-gtk-config kscreen sudo nano
+pacman -S --noconfirm bat xorg-server xf86-video-amdgpu plasma-desktop sddm sddm-kcm networkmanager virtualbox-guest-utils findutils mlocate man-db man-pages kate breeze-gtk cpupower kde-gtk-config kscreen sudo nano
 
 
 # install personal packages
-pacman -S bitwarden bleachbit clamav clonezilla deluge-gtk digikam dolphin firefox
+pacman -S --noconfirm bitwarden bleachbit clamav clonezilla deluge-gtk digikam dolphin firefox
 
 
 
