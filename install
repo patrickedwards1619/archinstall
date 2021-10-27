@@ -163,6 +163,10 @@ arch-chroot /mnt /root/config
 
 
 
+echo -e "\nDone\n"
+sleep 5
+
+
 # remove files that are now unnecessary
 echo -e "\nDeleting user input\n"
 sleep 5
