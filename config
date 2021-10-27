@@ -17,6 +17,7 @@ sleep 5
 
 # install personal packages
 echo -e "\nInstalling personal packages\n"
+sleep 5
 pacman -S --noconfirm bitwarden bleachbit clamav clonezilla deluge-gtk digikam dolphin firefox guake
 echo -e "\nDone\n"
 sleep 5
