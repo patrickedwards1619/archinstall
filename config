@@ -1,3 +1,9 @@
+echo -e "\nChrooted into new environment\n"
+sleep 2
+echo -e "\nRunning config script\n"
+sleep 2
+
+
 # configure pacman
 echo -e "\nConfiguring pacman\n"
 sleep 2
