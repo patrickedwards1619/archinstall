@@ -32,7 +32,7 @@ sleep 2
 # install necessary packages
 echo -e "\nInstalling necessary packages\n"
 sleep 2
-pacman -S --noconfirm findutils mlocate man-db man-pages breeze-gtk cpupower kate kde-gtk-config kscreen nmap p7zip plasma-systemmonitor plasma-firewall plasma-nm plasma-disks nano powerdevil print-manager pulseaudio alsa-utils plasma-pa pulseaudio-alsa pulseaudio-bluetooth pulseaudio-equalizer pulseaudio-lirc pulseaudio-zeroconf reflector sudo unzip
+pacman -S --noconfirm mlocate man-db man-pages breeze-gtk cpupower kate kde-gtk-config kscreen nmap p7zip plasma-systemmonitor plasma-firewall plasma-nm plasma-disks nano powerdevil print-manager pulseaudio alsa-utils plasma-pa pulseaudio-alsa pulseaudio-bluetooth pulseaudio-equalizer pulseaudio-lirc pulseaudio-zeroconf reflector sudo unzip
 echo -e "\nDone\n"
 sleep 2
 
