@@ -24,7 +24,7 @@ sleep 2
 # install personal packages
 echo -e "\nInstalling personal packages\n"
 sleep 2
-pacman -S --noconfirm atom bitwarden bleachbit blender clamav clonezilla deluge-gtk digikam dolphin filelight firefox flatpak gimp guake gwenview handbrake hardinfo kate khelpcenter kinfocenter ksystemlog libreoffice-fresh nmap okular partitionmanager rkhunter shotcut spectacle steam ufw virtualbox virtualbox-guest-iso virtualbox-guest-utils virtualbox-host-modules-arch vlc
+pacman -S --noconfirm atom bitwarden bleachbit blender clamav clonezilla deluge-gtk digikam dolphin filelight firefox flatpak gimp guake gwenview handbrake hardinfo kate khelpcenter kinfocenter ksystemlog libreoffice-fresh network-manager-applet nmap okular partitionmanager rkhunter shotcut spectacle steam ufw virtualbox virtualbox-guest-iso virtualbox-guest-utils virtualbox-host-modules-arch vlc
 echo -e "\nDone\n"
 sleep 2
 
