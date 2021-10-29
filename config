@@ -96,7 +96,7 @@ echo -e "\nAdding User\n"
 sleep 2
 useradd -m -g users -G wheel -s /bin/bash $user
 echo -e "$uspw\n$uspw" | passwd $user
-echo -e "%wheel ALL=(ALL) ALL\n" > /etc/sudoers.tmp
+echo -e "%wheel ALL=(ALL) ALL\n" > /etc/sudoers
 echo -e "\nDone\n"
 sleep 2
 
