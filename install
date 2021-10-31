@@ -1,0 +1,217 @@
+# get user input
+echo -e "\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n"
+echo -e "\nEnter username to be created:\n"
+read user
+echo -e "\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n"
+
+
+echo -e "\nEnter new password for $user:\n"
+read uspw
+echo -e "\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n"
+
+
+echo -e "\nEnter new password for root:\n"
+read rtpw
+echo -e "\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n"
+
+
+echo -e "\nEnter new hostname (device name):\n"
+read host
+echo -e "\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n"
+
+
+echo -e "\nEnter desired timezone in format of Country/City (Timezones can be listed by switching to a different console using Alt+F2 shorcut and issuing command \"ls /usr/share/zoneinfo/*/* | less\") (Switch back to this console with Alt+F1):\n"
+read tmzn
+echo -e "\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n"
+
+
+echo -e "\nEnter the name of the disk you would like to use in format of /dev/<disk_name> (Drives can be listed by switching to different console using Alt+F2 shorcut and issuing command \"fdisk -l\") (Switch back to this console with Alt+F1):\n"
+read drve
+echo -e "\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n"
+
+
+echo -e "\nHow much space would you like to reserve for efi partition (Include MB, GB, etc.) (Arch recommends at least 260 MB):\n"
+read drsz
+echo -e "\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n"
+
+# save these inputs in a file from which the respective fields will be sourced later
+echo -e "$user $uspw $rtpw $host $tmzn $drve $drsz" > ./confidentials
+
+
+echo -e "\nDone\n"
+sleep 2
+echo -e "\nInstalling Arch Linux\n"
+sleep 2
+
+
+
+
+
+
+
+
+
+
+# verify that the system is booted in UEFI mode
+echo -e "\nVerifying UEFI mode\n"
+sleep 2
+ls /sys/firmware/efi/efivars
+echo -e "\nDone\n"
+sleep 2
+
+
+# verify that the internet is working
+echo -e "\nVerifying the internet is working\n"
+sleep 2
+ping -c 5 archlinux.org
+echo -e "\nDone\n"
+sleep 2
+
+
+echo -e "\nFormatting Drive\n"
+sleep 2
+
+
+# wipe drive
+wipefs --all "$drve"
+
+
+# format Drive
+parted -s -a optimal "$drve" mklabel gpt
+parted -s -a optimal "$drve" mkpart "boot" 0% "$drsz"%
+parted -s -a optimal "$drve" set 1 esp on
+parted -s -a optimal "$drve" mkpart "root" "$drsz"% 100%
+yes | mkfs.fat -F32 "$drve"1
+yes | mkfs.ext4 "$drve"2
+
+
+# mount partitions
+mount "$drve"2 /mnt
+mkdir /mnt/boot
+mount "$drve"1 /mnt/boot
+
+
+echo -e "\nDone\n"
+sleep 2
+
+
+
+
+
+
+
+
+
+
+# update the system clock
+echo -e "\nUpdating Clock\n"
+sleep 2
+timedatectl set-ntp true
+echo -e "\nDone\n\n"
+sleep 2
+
+
+# update pacman repositories and mirror list
+echo -e "\nUpdating arch repositories and mirror list\n"
+sleep 2
+pacman -Sy
+reflector -c US --latest 5 --sort age --download-timeout 15 --connection-timeout 15 --save /etc/pacman.d/mirrorlist
+echo -e "\nDone\n"
+sleep 2
+
+
+# install essential linux packages
+echo -e "\nInstalling essential packages\n"
+sleep 2
+pacstrap /mnt base linux linux-firmware
+# if installing in a container, you can omit linux and linux-firmware
+# if installing in a virtual machine, you can omit linux-firmware
+echo -e "\nDone\n"
+sleep 2
+
+
+# generate an fstab file
+echo -e "\nGenerating fstab file\n"
+sleep 2
+genfstab -U /mnt >> /mnt/etc/fstab
+echo -e "\nDone\n"
+sleep 2
+
+
+
+
+
+
+
+
+
+
+# prepeare to change root into the new system and run config script, this script will configure pacman, install all packages provided in the script, then perform all other configurations
+
+echo -e "\nChrooting into new environment and running config script\n"
+sleep 2
+
+# copy the confidentials file to destination system's root partition so that config script can access the file from inside of chroot
+cp ./confidentials /mnt/root/
+
+# copy the config script to destination system's root partition
+cp ./config /mnt/root/
+
+# change file permission of config script to make it executable
+chmod a+x /mnt/root/config
+
+# change root into the new environment and run config script
+arch-chroot /mnt /root/config
+
+
+
+
+
+
+
+
+
+
+echo -e "\nDone\n"
+sleep 2
+
+
+# remove files that are now unnecessary
+echo -e "\nDeleting user input\n"
+sleep 2
+rm /mnt/root/{confidentials,config}
+echo -e "\nDone\n"
+sleep 2
+
+
+# unmount all partitions
+echo -e "\nUnmounting partitions\n"
+sleep 2
+umount -R /mnt
+echo -e "\nDone\n"
+sleep 2
+
+
+# show AUR instructions
+echo -e "\nInstallation Complete.\n"
+sleep 2
+echo -e "\nTo install packages from the AUR, you need to install paru from the AUR, then switch to root user and run the aur script from the archinstall repository at https://github.com/soberhippie3/archinstall\n"
+sleep 15
+
+
+# reboot the system
+echo -e "\nRebooting\n"
+sleep 2
+reboot
+
+
+
+
+
+
+
+
+
+
+
+
